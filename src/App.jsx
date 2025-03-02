@@ -5,7 +5,7 @@ import Hero from './components/Hero/Hero';
 import './App.css';
 import Residencies from './components/Residencies/Residencies';
 import Value from './components/Value/Value';
-import Companies from './components/companies/companies';
+import Companies from './components/Companies/Companies';
 import Contact from './components/Contact/Contact';
 
 function App() {
