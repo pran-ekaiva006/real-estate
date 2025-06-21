@@ -1,0 +1,52 @@
+/* src/pages/AddListing.css */
+
+.add-listing-container {
+    max-width: 600px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background-color: #ffffff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+  }
+  
+  .add-listing-container h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #333;
+  }
+  
+  .add-listing-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .add-listing-form input,
+  .add-listing-form textarea {
+    padding: 0.9rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  
+  .add-listing-form input:focus,
+  .add-listing-form textarea:focus {
+    border-color: #007bff;
+  }
+  
+  .add-listing-form button {
+    padding: 0.9rem;
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .add-listing-form button:hover {
+    background-color: #0056b3;
+  }
