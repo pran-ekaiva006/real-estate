@@ -1,12 +1,30 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
-// Import Swiper styles
 import "swiper/css";
 import "./Residencies.css";
-import data from '../../utils/slider.json'
+import data from '../../utils/slider.json'; // <-- Re-import the static data
 import { sliderSettings } from '../../utils/common';
+import API from '../../api'; // <-- Import your API instance
 
 const Residencies = () => {
+    // State to hold the combined list of static and fetched properties
+    const [listings, setListings] = useState([]); 
+
+    useEffect(() => {
+        const fetchListings = async () => {
+            try {
+                const res = await API.get('/api/listings');
+                // Combine the static data with the fetched data
+                const allListings = [...data, ...res.data]; 
+                setListings(allListings); // Set state with the combined list
+            } catch (err) {
+                console.error("Error fetching listings:", err);
+                setListings(data); // Fallback to only static data on error
+            }
+        };
+        fetchListings();
+    }, []);
+
     return (
         <section className="r-wrapper">
             <div className="paddings innerWidth r-container">
@@ -16,28 +34,26 @@ const Residencies = () => {
                 </div>
                 <Swiper {...sliderSettings}>
                     <SlideNextButton/>
-                     {data.map((card, i) => (
+                     {listings.map((card, i) => (
                             <SwiperSlide key={i}>
                                 <div className="r-card">
                                     <img src={card.image} alt="home" />
-
                                     <p className="secondaryText r-price">
                                         <span style={{ color: "orange" }}>$</span>
                                         <span>{card.price}</span>
                                     </p>
-
-                                    <p className='primaryText'>{card.name}</p>
-                                    <span className='seconadryText'>{card.detail}</span>
+                                    <p className='primaryText'>{card.name || card.title}</p>
+                                    <span className='seconadryText'>{card.detail || card.description}</span>
                                 </div>
                             </SwiperSlide>
                         ))}
                 </Swiper>
             </div>
- </section>
-    )
-}
+        </section>
+    );
+};
 
-export default Residencies
+export default Residencies;
 
 const SlideNextButton = () => {
     const swiper = useSwiper();
@@ -51,4 +67,4 @@ const SlideNextButton = () => {
         </button>
       </div>
     );
-  };
+};

@@ -1,7 +1,7 @@
 // src/pages/Login.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import API from '../api';
+import API from '../api'; // Your configured axios instance
 import './Auth.css';
 
 const Login = () => {
@@ -15,12 +15,14 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await API.post('/auth/login', form);
+      // Corrected API call with the '/api' prefix
+      const res = await API.post('/api/auth/login', form); 
+      
       localStorage.setItem('token', res.data.token);
       alert('Login successful');
-      navigate('/');
+      navigate('/listings');
     } catch (err) {
-      alert('Login failed: ' + err.response?.data || err.message);
+      alert('Login failed: ' + err.response?.data?.message || err.message);
     }
   };
 

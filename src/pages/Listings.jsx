@@ -1,3 +1,4 @@
+// src/pages/Listings.jsx
 import React, { useEffect, useState } from 'react';
 import API from '../api';
 import './Listings.css';
@@ -8,7 +9,8 @@ const Listings = () => {
   useEffect(() => {
     const fetchListings = async () => {
       try {
-        const res = await API.get('/listings');
+        // The API call is now correctly prefixed with '/api' to match the backend route
+        const res = await API.get('/api/listings');
         setListings(res.data);
       } catch (err) {
         console.error('Error fetching listings:', err);

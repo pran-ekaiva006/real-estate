@@ -1,6 +1,7 @@
+// src/pages/Register.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import API from '../api';
+import API from '../api'; // Your configured axios instance
 import './Auth.css';
 
 const Register = () => {
@@ -14,7 +15,9 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await API.post('/auth/register', form);
+      // The API call is now correctly prefixed with '/api' to match the backend route
+      await API.post('/api/auth/register', form); 
+      
       alert('Registration successful');
       navigate('/login');
     } catch (err) {
@@ -57,6 +60,7 @@ const Register = () => {
       </form>
     </div>
   );
+  
 };
 
 export default Register;

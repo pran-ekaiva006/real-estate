@@ -20,17 +20,35 @@ const AddListing = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const token = localStorage.getItem('token');
+
+    // 1. Check if the user is authenticated before making the request
+    if (!token) {
+      alert('Please log in to add a listing.');
+      navigate('/login'); // Redirect to login page
+      return;
+    }
+
     try {
-      const token = localStorage.getItem('token');
-      await API.post('/listings', form, {
+      // The API call is now correctly prefixed with '/api' to match the backend route
+      await API.post('/api/listings', form, {
         headers: {
+          // 2. Attach the token to the Authorization header
           Authorization: `Bearer ${token}`,
         },
       });
       alert('Listing added successfully');
-      navigate('/listings');
+      navigate('/listings'); // Redirect to the listings page on success
     } catch (err) {
-      alert('Failed to add listing');
+      // 3. Handle specific errors, including an expired or invalid token
+      if (err.response && err.response.status === 401) {
+        alert('Your session has expired. Please log in again.');
+        navigate('/login'); // Redirect to login page if token is invalid
+      } else {
+        console.error(err);
+        alert('Failed to add listing. Please try again.');
+      }
     }
   };
 
