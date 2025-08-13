@@ -1,0 +1,359 @@
+/* CRITICAL FIXES for Header Layout Issues */
+
+/* 1. ENSURE BASIC FLEXBOX IS WORKING */
+.h-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.h-wrapper.scrolled {
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.h-container {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  width: 100%;
+}
+
+/* 2. FIX NAVIGATION MENU LAYOUT */
+.h-menu {
+  display: flex !important;
+  align-items: center !important;
+  gap: 2rem;
+}
+
+.nav-links {
+  display: flex !important;
+  align-items: center !important;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 1rem;
+}
+
+.auth-buttons {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.75rem;
+}
+
+/* 3. HIDE MOBILE MENU ON DESKTOP */
+.mobile-menu-btn {
+  display: none !important;
+}
+
+.mobile-menu {
+  display: none !important;
+}
+
+/* 4. ENSURE LOGO CONTAINER WORKS */
+.logo-container {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.75rem;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+
+.logo-container:hover {
+  transform: scale(1.05);
+}
+
+.logo-icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.logo-text {
+  font-size: 20px;
+  font-weight: bold;
+  background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* 5. BASIC BUTTON STYLES */
+.btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+.btn-secondary {
+  background: rgba(102, 126, 234, 0.1);
+  color: #667eea;
+  border: 2px solid rgba(102, 126, 234, 0.2);
+}
+
+.btn-secondary:hover {
+  background: rgba(102, 126, 234, 0.15);
+  transform: translateY(-1px);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: #666;
+  padding: 0.75rem 1rem;
+}
+
+.btn-ghost:hover {
+  color: #667eea;
+  background: rgba(102, 126, 234, 0.05);
+}
+
+/* 6. NAVIGATION LINKS */
+.nav-link {
+  text-decoration: none;
+  color: #374151;
+  font-weight: 500;
+  padding: 0.5rem 0;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-link:hover {
+  color: #667eea;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* 6.1 USER INFO STYLES */
+.user-info {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.75rem;
+  padding: 0.5rem 1rem;
+  background: rgba(102, 126, 234, 0.05);
+  border-radius: 25px;
+  border: 1px solid rgba(102, 126, 234, 0.1);
+}
+
+.email-icon {
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-email {
+  font-weight: 500;
+  color: #374151;
+  font-size: 14px;
+}
+
+/* 7. MOBILE RESPONSIVE - SHOW MOBILE MENU ONLY ON SMALL SCREENS */
+@media (max-width: 768px) {
+  .h-menu {
+    display: none !important;
+  }
+    
+  .mobile-menu-btn {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+    
+  .hamburger-line {
+    width: 100%;
+    height: 3px;
+    background: #333;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+  
+  .mobile-menu-btn.active .hamburger-line:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+  }
+  
+  .mobile-menu-btn.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+  }
+  
+  .mobile-menu-btn.active .hamburger-line:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+  }
+    
+  .mobile-menu {
+    display: block !important;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    max-width: 400px;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    transition: right 0.4s ease;
+    z-index: 999;
+    padding: 2rem;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+  }
+    
+  .mobile-menu.active {
+    right: 0;
+  }
+  
+  .mobile-nav-links {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0;
+  }
+  
+  .mobile-nav-links li {
+    margin-bottom: 1rem;
+  }
+  
+  .mobile-nav-link {
+    display: block;
+    padding: 1rem;
+    text-decoration: none;
+    color: #374151;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .mobile-nav-link:hover {
+    color: #667eea;
+    background: rgba(102, 126, 234, 0.05);
+    transform: translateX(10px);
+  }
+  
+  .mobile-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(2px);
+    z-index: 998;
+  }
+  
+  .mobile-actions {
+    padding-top: 1rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .mobile-btn-full {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  
+  .mobile-auth-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+  
+  .mobile-user-section {
+    padding-top: 1rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .mobile-user-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(102, 126, 234, 0.05);
+    border-radius: 12px;
+    margin-bottom: 1rem;
+  }
+  
+  .mobile-user-info .user-email {
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  .mobile-user-info .email-icon {
+    font-size: 20px;
+  }
+}
+
+/* 8. UTILITY CLASSES - FORCE FLEXBOX */
+.flexCenter {
+  display: flex !important;
+  align-items: center !important;
+}
+
+.innerWidth {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.paddings {
+  padding: 0 2rem;
+}
+
+/* Add any additional styles for your page content here */
