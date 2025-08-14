@@ -1,25 +1,21 @@
 import express from 'express';
 import Listing from '../models/Listing.js';
-import jwt from 'jsonwebtoken';
+import { verifyToken } from '../middleware/authMiddleware.js'; // ✅ Correct import
+import { validateListing } from '../validation/listingValidation.js';
 
 const router = express.Router();
 
-const verifyToken = (req, res, next) => {
-  const token = req.headers['authorization'];
-  if (!token) return res.status(403).send('Access denied');
-
-  try {
-    const decoded = jwt.verify(token.split(' ')[1], process.env.JWT_SECRET);
-    req.userId = decoded.id;
-    next();
-  } catch (err) {
-    res.status(401).send('Invalid Token');
+// Create a new listing
+router.post('/', verifyToken, async (req, res) => { // ✅ use verifyToken
+  // Validate input
+  const { error } = validateListing(req.body);
+  if (error) {
+    return res.status(400).json({ error: error.details[0].message });
   }
-};
 
-router.post('/', verifyToken, async (req, res) => {
-  const listing = new Listing({ ...req.body, postedBy: req.userId });
   try {
+    // Use decoded token's user id
+    const listing = new Listing({ ...req.body, postedBy: req.user.id });
     const saved = await listing.save();
     res.status(201).json(saved);
   } catch (err) {
@@ -27,6 +23,7 @@ router.post('/', verifyToken, async (req, res) => {
   }
 });
 
+// Get all listings
 router.get('/', async (req, res) => {
   try {
     const listings = await Listing.find().populate('postedBy', 'username');
@@ -36,12 +33,16 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Get listing by ID
 router.get('/:id', async (req, res) => {
   try {
     const listing = await Listing.findById(req.params.id);
+    if (!listing) {
+      return res.status(404).json({ error: 'Listing not found' });
+    }
     res.json(listing);
   } catch (err) {
-    res.status(404).json({ error: 'Listing not found' });
+    res.status(500).json({ error: err.message });
   }
 });
 

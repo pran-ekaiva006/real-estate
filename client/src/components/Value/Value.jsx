@@ -5,7 +5,6 @@ import {
   AccordionItemHeading,
   AccordionItemButton,
   AccordionItemPanel,
-  AccordionItemState,
 } from "react-accessible-accordion";
 import "react-accessible-accordion/dist/fancy-example.css";
 import { MdOutlineArrowDropDown } from "react-icons/md";
@@ -16,7 +15,7 @@ const Value = () => {
   const [expandedItem, setExpandedItem] = useState(null);
 
   return (
-    <section id="value" className="v-wrapper">
+    <section id="our-value" className="v-wrapper">
       <div className="paddings innerWidth flexCenter v-container">
         {/* left side */}
         <div className="v-left">

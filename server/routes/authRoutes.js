@@ -1,36 +1,53 @@
-import express from 'express';
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import User from '../models/User.js';
+import express from "express";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import Joi from "joi";
+import { validate } from "../middleware/validate.js";
+import User from "../models/User.js";
 
 const router = express.Router();
 
-router.post('/register', async (req, res) => {
+// Joi schemas
+const registerSchema = Joi.object({
+  username: Joi.string().min(3).max(30).required(),
+  email: Joi.string().email().required(),
+  password: Joi.string().min(6).required(),
+});
+
+const loginSchema = Joi.object({
+  email: Joi.string().email().required(),
+  password: Joi.string().min(6).required(),
+});
+
+// Register
+router.post("/register", validate(registerSchema), async (req, res) => {
   try {
     const { username, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({ username, email, password: hashedPassword });
     await user.save();
-    res.status(201).json({ message: 'User registered successfully' });
+    res.status(201).json({ message: "User registered successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-router.post('/login', async (req, res) => {
+// Login
+router.post("/login", validate(loginSchema), async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ message: 'User not found' });
+    if (!user) return res.status(400).json({ message: "User not found" });
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
+    if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: '1d',
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1d" });
+
+    res.json({
+      token,
+      user: { id: user._id, username: user.username, email: user.email },
     });
-
-    res.json({ token, user: { id: user._id, username: user.username, email: user.email } });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

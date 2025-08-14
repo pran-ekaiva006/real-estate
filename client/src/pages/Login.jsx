@@ -4,8 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import API from '../api'; // Your configured axios instance
 import './Auth.css';
 
-const Login = () => {
+const Login = ({ onLogin }) => {
   const [form, setForm] = useState({ email: '', password: '' });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -14,15 +16,27 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    setLoading(true);
+
     try {
-      // Corrected API call with the '/api' prefix
-      const res = await API.post('/api/auth/login', form); 
-      
+      const res = await API.post('/api/auth/login', form);
+
+      // Save token & user info
       localStorage.setItem('token', res.data.token);
-      alert('Login successful');
+      localStorage.setItem('user', JSON.stringify(res.data.user));
+
+      // Trigger update in other components/tabs
+      window.dispatchEvent(new Event('storage'));
+
+      // Optional direct callback
+      if (onLogin) onLogin(res.data.user);
+
       navigate('/listings');
     } catch (err) {
-      alert('Login failed: ' + err.response?.data?.message || err.message);
+      setError(err.response?.data?.message || 'Login failed');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -30,6 +44,9 @@ const Login = () => {
     <div className="auth-container">
       <form className="auth-form" onSubmit={handleSubmit}>
         <h2>Login</h2>
+
+        {error && <div className="auth-error">{error}</div>}
+
         <input
           type="email"
           name="email"
@@ -37,6 +54,7 @@ const Login = () => {
           value={form.email}
           onChange={handleChange}
           required
+          disabled={loading}
         />
         <input
           type="password"
@@ -45,10 +63,18 @@ const Login = () => {
           value={form.password}
           onChange={handleChange}
           required
+          disabled={loading}
         />
-        <button type="submit">Login</button>
-        <div className="auth-switch" onClick={() => navigate('/register')}>
-          Don't have an account? Register
+
+        <button type="submit" disabled={loading}>
+          {loading ? 'Logging in...' : 'Login'}
+        </button>
+
+        <div
+          className="auth-switch"
+          onClick={() => navigate('/register')}
+        >
+          Don&apos;t have an account? Register
         </div>
       </form>
     </div>

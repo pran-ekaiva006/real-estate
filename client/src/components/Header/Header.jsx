@@ -1,57 +1,123 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import "./Header.css";
 
 function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // You can get this from your auth context/state
-  const [user, setUser] = useState({ name: 'John Doe', email: 'john@example.com', avatar: null }); // User data
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState(null);
 
-  // Handle scroll effect
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Check login state
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
+    const token = localStorage.getItem('token');
+    const userStr = localStorage.getItem('user');
+    if (token && userStr) {
+      setIsLoggedIn(true);
+      try {
+        setUser(JSON.parse(userStr));
+      } catch {
+        setUser(null);
+      }
+    } else {
+      setIsLoggedIn(false);
+      setUser(null);
+    }
+  }, [location.pathname]);
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+  // Sync login across tabs
+  useEffect(() => {
+    const handler = () => {
+      const token = localStorage.getItem('token');
+      const userStr = localStorage.getItem('user');
+      setIsLoggedIn(!!(token && userStr));
+      setUser(userStr ? JSON.parse(userStr) : null);
+    };
+    window.addEventListener('storage', handler);
+    return () => window.removeEventListener('storage', handler);
   }, []);
 
-  // Handle smooth scroll for anchor links
-  const handleAnchorClick = (e, href) => {
+  // Scroll shadow effect
+  useEffect(() => {
+    const onScroll = () => setIsScrolled(window.scrollY > 50);
+    onScroll();
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const scrollToSection = (id) => {
+    const el = document.querySelector(id);
+    if (el) {
+      const headerHeight = 80;
+      const elementPosition = el.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
+      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+    }
+  };
+
+  const handleAnchorClick = (e, href, item) => {
     e.preventDefault();
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
-      });
+
+    if (item === 'View Listings') {
+      navigate('/listings');
+      setIsMobileMenuOpen(false);
+      return;
+    }
+
+    // Special handling for "Our Value"
+    if (item === 'Our Value') {
+      if (location.pathname === '/') {
+        scrollToSection(href);
+      } else {
+        navigate('/');
+        setTimeout(() => scrollToSection(href), 100);
+      }
+      setIsMobileMenuOpen(false);
+      return;
+    }
+
+    const el = document.querySelector(href);
+    if (el) {
+      scrollToSection(href);
     }
     setIsMobileMenuOpen(false);
   };
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
-
-  // Demo function to toggle login state (replace with your actual auth logic)
-  const handleLoginToggle = () => {
-    setIsLoggedIn(!isLoggedIn);
-  };
+  const toggleMobileMenu = () => setIsMobileMenuOpen((v) => !v);
 
   const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
     setIsLoggedIn(false);
-    // Add your logout logic here
+    setUser(null);
+    setIsMobileMenuOpen(false);
+    navigate('/login');
   };
+
+  const addListingClick = (e) => {
+    if (!isLoggedIn) {
+      e.preventDefault();
+      navigate('/login');
+    }
+  };
+
+  const firstLetter =
+    (user?.username?.[0] ||
+      user?.name?.[0] ||
+      user?.email?.[0] ||
+      'U').toUpperCase();
+
+  const sections = ['Residencies', 'Our Value', 'Contact Us', 'View Listings'];
 
   return (
     <>
-      {/* Header */}
       <header className={`h-wrapper ${isScrolled ? 'scrolled' : ''}`}>
         <div className="h-container">
-          
           {/* Logo */}
-          <a href="/" className="logo-container" onClick={(e) => { e.preventDefault(); setIsLoggedIn(!isLoggedIn); }}>
+          <a href="/" className="logo-container" onClick={(e) => { e.preventDefault(); navigate('/'); }}>
             <div className="logo-icon">H</div>
             <span className="logo-text">Homyz</span>
           </a>
@@ -59,41 +125,39 @@ function Header() {
           {/* Desktop Navigation */}
           <div className="h-menu">
             <ul className="nav-links">
-              {['Residencies', 'Our Value', 'Contact Us', 'View Listings'].map((item) => (
-                <li key={item}>
-                  <a
-                    href={`#${item.toLowerCase().replace(' ', '-')}`}
-                    className="nav-link"
-                    onClick={(e) => handleAnchorClick(e, `#${item.toLowerCase().replace(' ', '-')}`)}
-                  >
-                    {item}
-                  </a>
-                </li>
-              ))}
+              {sections.map((item) => {
+                const id = `#${item.toLowerCase().replace(/\s+/g, '-')}`;
+                return (
+                  <li key={item}>
+                    <a href={id} className="nav-link" onClick={(e) => handleAnchorClick(e, id, item)}>
+                      {item}
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
 
-            {/* Action Buttons */}
+            {/* Actions */}
             <div className="nav-actions">
-              <a href="/add-listing" className="btn btn-secondary">
-                <span>+</span>
-                Add Listing
+              <a href="/add-listing" onClick={addListingClick} className="btn btn-secondary">
+                <span>+</span> Add Listing
               </a>
-              
-              {/* Conditional rendering based on login status */}
-              {isLoggedIn ? (
+
+              {!isLoggedIn ? (
                 <div className="auth-buttons">
-                  <div className="user-info">
-                    <div className="email-icon">
-                      ✉️
-                    </div>
-                    <span className="user-email">{user.email}</span>
-                  </div>
-                  <button onClick={handleLogout} className="btn btn-ghost">Logout</button>
+                  <a href="/login" onClick={(e) => { e.preventDefault(); navigate('/login'); }} className="btn btn-ghost">
+                    Login
+                  </a>
+                  <a href="/register" onClick={(e) => { e.preventDefault(); navigate('/register'); }} className="btn btn-primary">
+                    Register
+                  </a>
                 </div>
               ) : (
                 <div className="auth-buttons">
-                  <a href="/login" className="btn btn-ghost">Login</a>
-                  <a href="/register" className="btn btn-primary">Register</a>
+                  <div className="avatar" title={user?.email || user?.username || 'Account'}>
+                    {firstLetter}
+                  </div>
+                  <button onClick={handleLogout} className="btn btn-ghost">Logout</button>
                 </div>
               )}
             </div>
@@ -115,49 +179,48 @@ function Header() {
       {/* Mobile Menu */}
       <div className={`mobile-menu ${isMobileMenuOpen ? 'active' : ''}`}>
         <ul className="mobile-nav-links">
-          {['🏠 Residencies', '⭐ Our Value', '📞 Contact Us', '📋 View Listings'].map((item) => (
-            <li key={item}>
-              <a
-                href={`#${item.split(' ')[1].toLowerCase().replace(' ', '-')}`}
-                className="mobile-nav-link"
-                onClick={(e) => handleAnchorClick(e, `#${item.split(' ')[1].toLowerCase().replace(' ', '-')}`)}
-              >
-                {item}
-              </a>
-            </li>
-          ))}
+          {sections.map((item) => {
+            const id = `#${item.toLowerCase().replace(/\s+/g, '-')}`;
+            return (
+              <li key={item}>
+                <a href={id} className="mobile-nav-link" onClick={(e) => handleAnchorClick(e, id, item)}>
+                  {item}
+                </a>
+              </li>
+            );
+          })}
         </ul>
-        
+
         <div className="mobile-actions">
-          <a href="/add-listing" className="btn btn-secondary mobile-btn-full">
+          <a href="/add-listing" onClick={addListingClick} className="btn btn-secondary mobile-btn-full">
             Add New Listing
           </a>
-          
-          {/* Mobile auth buttons - conditional */}
-          {isLoggedIn ? (
-            <div className="mobile-user-section">
-              <div className="mobile-user-info">
-                <div className="email-icon">✉️</div>
-                <span className="user-email">{user.email}</span>
-              </div>
-              <button onClick={handleLogout} className="btn btn-secondary mobile-btn-full">Logout</button>
+
+          {!isLoggedIn ? (
+            <div className="mobile-auth-grid">
+              <a href="/login" onClick={(e) => { e.preventDefault(); setIsMobileMenuOpen(false); navigate('/login'); }} className="btn btn-ghost">
+                Login
+              </a>
+              <a href="/register" onClick={(e) => { e.preventDefault(); setIsMobileMenuOpen(false); navigate('/register'); }} className="btn btn-primary">
+                Get Started
+              </a>
             </div>
           ) : (
-            <div className="mobile-auth-grid">
-              <a href="/login" className="btn btn-ghost">Login</a>
-              <a href="/register" className="btn btn-primary">Get Started</a>
+            <div className="mobile-user-section">
+              <div className="mobile-user-info">
+                <div className="avatar">{firstLetter}</div>
+                <span className="user-email">{user?.email}</span>
+              </div>
+              <button onClick={handleLogout} className="btn btn-secondary mobile-btn-full">
+                Logout
+              </button>
             </div>
           )}
         </div>
       </div>
 
       {/* Mobile Menu Overlay */}
-      {isMobileMenuOpen && (
-        <div 
-          className="mobile-overlay" 
-          onClick={() => setIsMobileMenuOpen(false)}
-        ></div>
-      )}
+      {isMobileMenuOpen && <div className="mobile-overlay" onClick={() => setIsMobileMenuOpen(false)} />}
     </>
   );
 }
