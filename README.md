@@ -1,6 +1,6 @@
 # Real Estate Web Application
 
-<img src="/client/public/hero-image.png" alt="Real Estate Platform" width="400" height="200">
+<img src="/client/public/hero-image.png" alt="Real Estate Platform" width="800" height="300">
 
 <h1 align="center">Real Estate Web Application</h1>
 
