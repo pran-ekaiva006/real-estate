@@ -1,91 +1,133 @@
 # Real Estate Web Application
 
-![Real Estate Platform](client/public/hero-image.png)
+<img src="/client/public/hero-image.png" alt="Real Estate Platform" width="400" height="200">
 
-<div align="center">
+<h1 align="center">Real Estate Web Application</h1>
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-deployed-brightgreen?style=for-the-badge&logo=render)](https://real-estate-2-fnb9.onrender.com)
-[![GitHub Repository](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github)](https://github.com/pran-ekaiva006/real-estate)
-[![MIT License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](https://github.com/pran-ekaiva006/real-estate/blob/main/LICENSE)
+<p align="center">
+  <a href="https://github.com/pran-ekaiva006/real-estate">
+    <img src="https://img.shields.io/badge/GitHub-Repo-blue?logo=github" alt="GitHub Repo">
+  </a>
+  
+  <a href="https://real-estate-2-fnb9.onrender.com" target="_blank">
+    <img src="https://img.shields.io/badge/Live-Demo-blue?logo=render&logoColor=white" alt="Live Demo on Render">
+  </a>
+  
+  <a href="https://github.com/pran-ekaiva006/real-estate/blob/main/LICENSE">
+    <img src="https://img.shields.io/badge/License-MIT-yellow" alt="License">
+  </a>
+</p>
 
-*A modern, full-stack real estate platform built with the MERN stack*
+---
 
-</div>
+### 📋 Table of Contents
 
-## Overview
+- [🎯 About The Project](#about-the-project)
+- [✨ Features](#features)
+- [🛠️ Tech Stack](#tech-stack)
+- [🎪 Demo](#demo)
+- [🔧 Installation](#installation)
+- [⚙️ Environment Variables](#environment-variables)
+- [📂 Folder Structure](#folder-structure)
+- [🚀 API Documentation](#api-documentation)
+- [📜 License](#license)
 
-A comprehensive real estate web application that enables users to browse, search, and manage property listings with a modern, responsive interface. Built as a full-stack demonstration of contemporary web development practices, featuring secure authentication, dynamic content management, and an intuitive user experience.
+---
 
-**Live Application:** [https://real-estate-2-fnb9.onrender.com](https://real-estate-2-fnb9.onrender.com)
+### **About The Project**
 
-## Key Features
+Real Estate Web Application is a comprehensive MERN stack project that enables users to browse, search, and manage property listings with a modern, responsive interface. Built as a full-stack demonstration of contemporary web development practices, featuring secure authentication, dynamic content management, and an intuitive user experience.
 
-### Property Management
-- **Advanced Search & Filtering** - Filter properties by price range, location, and property type
-- **Detailed Property Listings** - Comprehensive property information with image galleries
-- **Property Creation** - Add new listings with form validation and data persistence
+The project aims to provide a professional property browsing platform that showcases skills in frontend development, backend API design, database integration, and modern UI/UX principles.
 
-### User Experience
-- **User Authentication** - Secure registration and login system
-- **Responsive Design** - Optimized for desktop, tablet, and mobile devices
-- **Interactive Chatbot** - Predefined Q&A system for user assistance
-- **Smooth Animations** - Enhanced UX with Framer Motion transitions
+---
 
-## Technology Stack
+### **Features**
 
-### Frontend
-- **React 18** - Modern React with hooks and context
-- **Tailwind CSS** - Utility-first CSS framework
-- **Framer Motion** - Animation library for React
-- **Vite** - Next-generation frontend build tool
+- 🏠 **Browse property listings** with detailed information and image galleries
+- 🔍 **Advanced Search & Filtering** by price range, location, and property type  
+- 📝 **Property Management** - Add, edit, and delete listings with form validation
+- 🔐 **User Authentication** - Secure registration and login system
+- 💬 **Interactive Chatbot** - Predefined Q&A system for user assistance  
+- 📱 **Fully Responsive Design** - Optimized for desktop, tablet, and mobile devices
+- ⚡ **Smooth Animations** - Enhanced UX with Framer Motion transitions
+- 💾 **Data Persistence** - Secure MongoDB integration for all user and property data
 
-### Backend
-- **Node.js** - JavaScript runtime environment
-- **Express.js** - Web application framework
-- **MongoDB** - NoSQL database for data persistence
-- **Auth0** - Authentication and authorization platform
+---
 
-### Development Tools
-- **ESLint & Prettier** - Code formatting and linting
-- **Git** - Version control system
+## **Tech Stack**
 
-## Getting Started
+<p>
+  <img alt="React" src="https://img.shields.io/badge/React-20232A?logo=react&logoColor=61DAFB"/>
+  <img alt="TailwindCSS" src="https://img.shields.io/badge/TailwindCSS-38B2AC?logo=tailwind-css&logoColor=white"/>
+  <img alt="Node.js" src="https://img.shields.io/badge/Node.js-339933?logo=node.js&logoColor=white"/>
+  <img alt="Express.js" src="https://img.shields.io/badge/Express.js-000000?logo=express&logoColor=white"/>
+  <img alt="MongoDB" src="https://img.shields.io/badge/MongoDB-47A248?logo=mongodb&logoColor=white"/>
+  <img alt="Auth0" src="https://img.shields.io/badge/Auth0-EB5424?logo=auth0&logoColor=white"/>
+  <img alt="Framer Motion" src="https://img.shields.io/badge/Framer%20Motion-0055FF?logo=framer&logoColor=white"/>
+  <img alt="Vite" src="https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white"/>
+</p>
 
-### Prerequisites
-- Node.js (v16.0.0 or higher)
-- MongoDB (local installation or MongoDB Atlas)
-- Git
+---
 
-### Installation
+## **Demo**
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/pran-ekaiva006/real-estate.git
-   cd real-estate
-   ```
+Check out the live project here: [Real Estate Web Application Live Demo](https://real-estate-2-fnb9.onrender.com)  
 
-2. **Install server dependencies**
-   ```bash
-   cd server
-   npm install
-   ```
+GitHub repository: [Real Estate GitHub](https://github.com/pran-ekaiva006/real-estate)
 
-3. **Install client dependencies**
-   ```bash
-   cd ../client
-   npm install
-   ```
+---
 
-### Environment Configuration
+## **Installation**
+
+1. Clone the repo:
+
+```bash
+git clone https://github.com/pran-ekaiva006/real-estate.git
+```
+
+### Install dependencies:
+
+# Frontend
+```bash
+cd real-estate/client
+npm install
+```
+
+# Backend
+```bash
+cd ../server
+npm install
+```
+
+Run the application:
+
+# Frontend
+```bash
+cd client
+npm run dev
+```
+
+# Backend
+```bash
+cd ../server
+npm start
+```
+
+The application will be available at `http://localhost:5173` (frontend) with the API running on `http://localhost:5001`.
+
+---
+
+## ⚙️ **Environment Variables**
 
 Create `.env` files in both directories:
 
-**Client (`client/.env`)**
+### Client (`client/.env`):
 ```env
 VITE_API_BASE_URL=http://localhost:5001
 ```
 
-**Server (`server/.env`)**
+### Server (`server/.env`):
 ```env
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret_key
@@ -93,78 +135,82 @@ PORT=5001
 NODE_ENV=development
 ```
 
-### Running the Application
+---
 
-1. **Start the backend server**
-   ```bash
-   cd server
-   npm start
-   ```
+### 📂 **Folder Structure**
 
-2. **Start the frontend development server**
-   ```bash
-   cd client
-   npm run dev
-   ```
-
-The application will be available at `http://localhost:5173` (frontend) with the API running on `http://localhost:5001`.
-
-## Project Structure
-
-```
-real-estate/
+```bash
+real-estate-main/
+├── .gitignore
+├── LICENSE
+├── README.md
 ├── client/                 # Frontend React application
-│   ├── public/            # Static assets
-│   ├── src/
-│   │   ├── components/    # Reusable React components
-│   │   ├── pages/         # Page components
-│   │   ├── api/          # API service functions
-│   │   └── utils/        # Utility functions
+│   ├── .eslintrc.cjs
+│   ├── index.html
+│   ├── package-lock.json
 │   ├── package.json
-│   └── vite.config.js
+│   ├── tailwind.config.js
+│   ├── vite.config.js
+│   ├── public/            # Static assets
+│   │   ├── hero-image.png
+│   │   ├── logo.png
+│   │   └── vite.svg
+│   └── src/
+│       ├── App.css
+│       ├── App.jsx
+│       ├── index.css
+│       ├── main.jsx
+│       ├── components/    # Reusable React components
+│       │   ├── custom/
+│       │   │   ├── Header.jsx
+│       │   │   ├── Footer.jsx
+│       │   │   └── PropertyCard.jsx
+│       │   └── ui/
+│       │       ├── button.jsx
+│       │       ├── input.jsx
+│       │       └── dialog.jsx
+│       ├── pages/         # Page components
+│       │   ├── Home.jsx
+│       │   ├── Properties.jsx
+│       │   ├── PropertyDetail.jsx
+│       │   └── Dashboard.jsx
+│       ├── api/          # API service functions
+│       │   └── PropertyService.js
+│       ├── context/      # React Context
+│       │   └── AuthContext.jsx
+│       └── utils/        # Utility functions
+│           └── helpers.js
 │
-├── server/                # Backend Node.js application
-│   ├── controllers/       # Route handlers
-│   ├── models/           # Database models
-│   ├── routes/           # API routes
-│   ├── middleware/       # Custom middleware
-│   ├── server.js         # Application entry point
-│   └── package.json
-│
-└── README.md
+└── server/                # Backend Node.js application
+    ├── controllers/       # Route handlers
+    │   ├── authController.js
+    │   └── propertyController.js
+    ├── models/           # Database models
+    │   ├── User.js
+    │   └── Property.js
+    ├── routes/           # API routes
+    │   ├── auth.js
+    │   └── properties.js
+    ├── middleware/       # Custom middleware
+    │   └── authMiddleware.js
+    ├── utils/           # Utility functions
+    │   └── database.js
+    ├── server.js        # Application entry point
+    └── package.json
 ```
-
-## Deployment
-
-The application is deployed using modern cloud platforms:
-
-- **Backend**: [Render](https://render.com) - Node.js hosting with MongoDB Atlas
-- **Frontend**: Compatible with Vercel, Netlify, or similar static hosting services
-- **Database**: MongoDB Atlas for production data storage
-
-## API Documentation
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](https://github.com/pran-ekaiva006/real-estate/blob/main/LICENSE) file for details.
-
-## Author
-
-**Pranjal Kumar Verma**
-- Location: Bhopal, Madhya Pradesh, India
-- GitHub: [@pran-ekaiva006](https://github.com/pran-ekaiva006)
-- LinkedIn: [Connect with me](https://linkedin.com/in/your-profile)
 
 ---
 
-<div align="center">
-<p>⭐ Star this repository if you found it helpful!</p>
-</div>
+
+
+### Additional Features
+- **File Upload**: Property images upload with validation
+- **Pagination**: All list endpoints support pagination
+- **Filtering**: Advanced filtering by price, location, property type
+- **Authentication**: JWT-based secure authentication system
+
+---
+
+### **License**
+
+This Project is Licensed under the MIT License, see [LICENSE](./LICENSE) for details.
